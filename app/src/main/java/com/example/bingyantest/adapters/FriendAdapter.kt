@@ -13,7 +13,7 @@ import com.example.bingyantest.activity.ChatActivity
 import com.example.bingyantest.objects.Friend
 import com.example.bingyantest.objects.title.ChatTitleLayout
 
-class FriendsAdapter(val friendList: List<Friend>) : RecyclerView.Adapter<FriendsAdapter.ViewHolder>() {
+class FriendAdapter(val friendList: ArrayList<Friend>) : RecyclerView.Adapter<FriendAdapter.ViewHolder>() {
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val friendImage: ImageView = view.findViewById(R.id.friendImage)
         val friendName: TextView = view.findViewById(R.id.friendName)

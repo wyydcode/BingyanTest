@@ -1,7 +1,5 @@
 package com.example.bingyantest.activity
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
@@ -11,7 +9,7 @@ import com.example.bingyantest.R
 class UserInformation : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.personal_information)
+        setContentView(R.layout.friend_information)
         val name = findViewById<TextView>(R.id.fname)
         val account = findViewById<TextView>(R.id.faccount)
         val email = findViewById<TextView>(R.id.femail)

@@ -10,6 +10,7 @@ object Objects  {
     private lateinit var appContext: Context
     private lateinit var dbHelper: MyDatabaseHelper
     val friendslist = ArrayList<Friend>()
+    private lateinit var userAccount: String
     fun add(friend:Friend){
         friendslist.add(friend)
         val db = dbHelper.writableDatabase
@@ -22,10 +23,16 @@ object Objects  {
         }
         db.insert("Friends", null, values)
     }
-    fun remove(friend: Friend){
-        friendslist.remove(friend)
-        val db = dbHelper.writableDatabase
-        db.delete("Friends", "account = ?", arrayOf("${friend.account}"))
+    fun remove(account: String){
+        for(i in friendslist){
+            if(account == i.account){
+                friendslist.remove(i)
+                val db = dbHelper.writableDatabase
+                db.delete("Friends", "account = ?", arrayOf("${i.account}"))
+                break
+            }
+        }
+
     }
     fun load(){
         val db = dbHelper.writableDatabase
@@ -58,5 +65,13 @@ object Objects  {
             put("imagerui", friend.imageuri)
         }
         db.update("Friends", values, "account = ?", arrayOf("${friend.account}"))
+    }
+    fun isFriend(account:String): Boolean{
+        for(i in friendslist){
+            if(account == i.account){
+                return true
+            }
+        }
+        return false
     }
 }

@@ -50,7 +50,7 @@ class ChatActivity : AppCompatActivity() {
 
     companion object {
         fun actionStart(context: Context, data1: String, data2: String, data3: String, data4: String) {
-            val intent = Intent(context, FriendInformation::class.java)
+            val intent = Intent(context, ChatActivity::class.java)
             intent.putExtra("data1", data1)
             intent.putExtra("data2", data2)
             intent.putExtra("data3", data3)

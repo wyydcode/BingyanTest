@@ -22,13 +22,29 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.FriendInformation">
+        <activity
+            android:name=".activity.FriendInformation"
+            android:exported="true">
 
         </activity>
-        <activity android:name=".MainActivity" >
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
 
         </activity>
-        <activity android:name=".activity.ChatActivity">
+        <activity
+            android:name=".activity.ChatActivity"
+            android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".activity.UserInformation"
+            android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".activity.AddFriend"
+            android:exported="true">
 
         </activity>
     </application>
