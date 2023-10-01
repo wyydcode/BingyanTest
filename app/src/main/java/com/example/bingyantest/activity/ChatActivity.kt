@@ -11,13 +11,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bingyantest.R
 import com.example.bingyantest.adapters.MsgAdapter
 import com.example.bingyantest.objects.Msg
+import com.example.bingyantest.objects.MyObjects
+import java.time.LocalDateTime
 
 class ChatActivity : AppCompatActivity() {
     private val msgList = ArrayList<Msg>()
+    private lateinit var friendaccount:String
     private var adapter: MsgAdapter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
+        friendaccount= intent.getStringExtra("name")!!
         initMsg()
         val layoutManager = LinearLayoutManager(this)
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
@@ -29,7 +33,7 @@ class ChatActivity : AppCompatActivity() {
         send.setOnClickListener {
             val content = inputText.text.toString()
             if (content.isNotEmpty()) {
-                val msg = Msg(content, Msg.TYPE_SENT)
+                val msg = Msg(MyObjects.userAccount,friendaccount,content,LocalDateTime.now().toString(), Msg.TYPE_SENT)
                 msgList.add(msg)
                 adapter?.notifyItemInserted(msgList.size - 1) // 当有新消息时，刷新RecyclerView中的显示
                 recyclerView.scrollToPosition(msgList.size - 1) // 将RecyclerView定位到最后一行
@@ -40,21 +44,21 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun initMsg() {
-        val msg1 = Msg("Hello guy.", Msg.TYPE_RECEIVED)
+        val msg1 = Msg(MyObjects.userAccount,friendaccount,"Hello guy.",LocalDateTime.now().toString(), Msg.TYPE_RECEIVED)
         msgList.add(msg1)
-        val msg2 = Msg("Hello. Who is that?", Msg.TYPE_SENT)
+        val msg2 = Msg(MyObjects.userAccount,friendaccount,"Hello. Who is that?",LocalDateTime.now().toString(), Msg.TYPE_SENT)
         msgList.add(msg2)
-        val msg3 = Msg("This is Tom. Nice talking to you. ", Msg.TYPE_RECEIVED)
+        val msg3 = Msg(MyObjects.userAccount,friendaccount,"This is Tom. Nice talking to you. ",LocalDateTime.now().toString(), Msg.TYPE_RECEIVED)
         msgList.add(msg3)
     }
 
     companion object {
-        fun actionStart(context: Context, data1: String, data2: String, data3: String, data4: String) {
+        fun actionStart(context: Context, name: String, account: String, email: String, imageuri: String) {
             val intent = Intent(context, ChatActivity::class.java)
-            intent.putExtra("data1", data1)
-            intent.putExtra("data2", data2)
-            intent.putExtra("data3", data3)
-            intent.putExtra("data4", data4)
+            intent.putExtra("name", name)
+            intent.putExtra("account", account)
+            intent.putExtra("email", email)
+            intent.putExtra("imageuri", imageuri)
             context.startActivity(intent)
         }
     }

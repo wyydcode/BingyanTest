@@ -47,6 +47,14 @@
             android:exported="true">
 
         </activity>
+        <receiver
+            android:name=".broadcast.AddFriendBroadcast"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.example.broadcasttest.ADDFRIEND_BROADCAST"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

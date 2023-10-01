@@ -9,6 +9,8 @@ import android.widget.EditText
 import android.widget.Toast
 import com.example.bingyantest.MainActivity
 import com.example.bingyantest.R
+import com.example.bingyantest.datasave.MyDatabaseHelper
+import com.example.bingyantest.objects.MyObjects
 
 class LoginActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +45,9 @@ class LoginActivity : BaseActivity() {
                 }
                 editor.apply()
                 val intent = Intent(this, MainActivity::class.java)
+                MyObjects.userAccount = account
+                MyObjects.initialize(this)
+                MyObjects.load()
                 startActivity(intent)
                 finish()
             } else {

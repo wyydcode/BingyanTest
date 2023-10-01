@@ -2,17 +2,25 @@ package com.example.bingyantest.objects
 
 import android.content.ContentValues
 import android.content.Context
-import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.example.bingyantest.datasave.MyDatabaseHelper
-import kotlinx.coroutines.NonDisposableHandle.parent
 
-object Objects  {
+object MyObjects  {
     private lateinit var appContext: Context
     private lateinit var dbHelper: MyDatabaseHelper
-    val friendslist = ArrayList<Friend>()
-    private lateinit var userAccount: String
+    private var listeners = ArrayList<DataUpdateListener>()
+    public var friendslist = MutableLiveData<ArrayList<Friend>>()
+    public lateinit var userAccount: String
+    fun query(account: String):Friend{
+        friendslist.value?.forEach{
+            if(account == it.account){
+                return it
+            }
+        }
+        return Friend("error","error","error","error")
+    }
     fun add(friend:Friend){
-        friendslist.add(friend)
+        friendslist.value?.add(friend)
         val db = dbHelper.writableDatabase
         val values = ContentValues().apply {
             // 开始组装第一条数据
@@ -24,12 +32,12 @@ object Objects  {
         db.insert("Friends", null, values)
     }
     fun remove(account: String){
-        for(i in friendslist){
-            if(account == i.account){
-                friendslist.remove(i)
+        friendslist.value?.forEach{
+            if(account == it.account){
+                friendslist.value?.remove(it)
                 val db = dbHelper.writableDatabase
-                db.delete("Friends", "account = ?", arrayOf("${i.account}"))
-                break
+                db.delete("Friends", "account = ?", arrayOf("${it.account}"))
+                return
             }
         }
 
@@ -37,7 +45,7 @@ object Objects  {
     fun load(){
         val db = dbHelper.writableDatabase
         // 查询Book表中所有的数据
-        val cursor = db.query("Book", null, null, null, null, null, null)
+        val cursor = db.query("Friends", null, null, null, null, null, null)
         if (cursor.moveToFirst()) {
             do {
                 // 遍历Cursor对象，取出数据并打印
@@ -45,7 +53,7 @@ object Objects  {
                 val account = cursor.getString(cursor.getColumnIndexOrThrow("account"))
                 val email = cursor.getString(cursor.getColumnIndexOrThrow("email"))
                 val imageuri = cursor.getString(cursor.getColumnIndexOrThrow("imageuri"))
-                friendslist.add(Friend(name,account,imageuri,email))
+                friendslist.value?.add(Friend(name,account,imageuri,email))
             } while (cursor.moveToNext())
         }
         cursor.close()
@@ -67,11 +75,28 @@ object Objects  {
         db.update("Friends", values, "account = ?", arrayOf("${friend.account}"))
     }
     fun isFriend(account:String): Boolean{
-        for(i in friendslist){
-            if(account == i.account){
+        friendslist.value?.forEach{
+            if(account == it.account){
                 return true
             }
         }
         return false
+    }
+    fun updateData(){
+        notifyDataUpdate()
+    }
+    fun registerDataUpdateListener(listener: DataUpdateListener){
+        listeners.add(listener)
+    }
+    fun unregisterDataUpdateListener(listener: DataUpdateListener){
+        listeners.remove((listener))
+    }
+    fun notifyDataUpdate(){
+        for(listener in listeners){
+            listener.onDataUpdate()
+        }
+    }
+    interface DataUpdateListener{
+        fun onDataUpdate()
     }
 }

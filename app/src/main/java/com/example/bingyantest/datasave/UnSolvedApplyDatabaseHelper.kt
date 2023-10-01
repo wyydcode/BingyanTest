@@ -5,13 +5,12 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.widget.Toast
 
-class ApplyDatabaseHelper(val context: Context, name: String, version: Int) :
+class UnSolvedApplyDatabaseHelper(val context: Context, name: String, version: Int) :
     SQLiteOpenHelper(context, name, null, version) {
-        private val createApplys = "create table Applys (" +
+        private val createApplys = "create table UnSolvedApplys (" +
                 " id integer primary key autoincrement," +
                 "sender text," +
                 "receiver text," +
-                "ifsolved boolean," +
                 "ifagreed boolean)"
         override fun onCreate(db: SQLiteDatabase) {
             db.execSQL(createApplys)

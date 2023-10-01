@@ -14,10 +14,10 @@ class UserInformation : AppCompatActivity(){
         val account = findViewById<TextView>(R.id.faccount)
         val email = findViewById<TextView>(R.id.femail)
         val image = findViewById<ImageView>(R.id.fimage)
-        name.text = intent.getStringExtra("data1")
-        account.text = intent.getStringExtra("data2")
-        email.text = intent.getStringExtra(("data3"))
-        val resourceId = intent.getIntExtra("data4",0)
+        name.text = intent.getStringExtra("name")
+        account.text = intent.getStringExtra("account")
+        email.text = intent.getStringExtra(("email"))
+        val resourceId = intent.getIntExtra("imageuri",0)
         image.setImageResource(resourceId)
     }
 }

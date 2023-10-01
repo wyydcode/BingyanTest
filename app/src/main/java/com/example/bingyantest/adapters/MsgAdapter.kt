@@ -6,7 +6,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bingyantest.R
+import com.example.bingyantest.activity.FriendInformation
 import com.example.bingyantest.objects.Msg
+import com.example.bingyantest.objects.MyObjects
+import de.hdodenhof.circleimageview.CircleImageView
+
 
 class MsgAdapter(val msgList: List<Msg>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     inner class LeftViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -31,9 +35,19 @@ class MsgAdapter(val msgList: List<Msg>) : RecyclerView.Adapter<RecyclerView.Vie
     }
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val msg = msgList[position]
+        val friendaccount = msg.sender
+        val friend = MyObjects.query(friendaccount)
         when (holder) {
-            is LeftViewHolder -> holder.leftMsg.text = msg.content
-            is RightViewHolder -> holder.rightMsg.text = msg.content
+            is LeftViewHolder -> {
+                holder.leftMsg.text = msg.content
+                val icon = holder.itemView.findViewById<CircleImageView>(R.id.iconImage)
+                icon.setOnClickListener{
+                    FriendInformation.actionStart(holder.itemView.context,friend.name,friend.account,friend.email,friend.imageuri)
+                }
+            }
+            is RightViewHolder -> {
+                holder.rightMsg.text = msg.content
+            }
             else -> throw IllegalArgumentException()
         }
     }

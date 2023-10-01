@@ -2,20 +2,17 @@ package com.example.bingyantest.activity
 
 import android.content.ContentValues
 import android.os.Bundle
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.bingyantest.R
-import com.example.bingyantest.adapters.FriendAdapter
 import com.example.bingyantest.datasave.UsersDatabaseHelper
 import com.example.bingyantest.fragment.NoResultFragment
 import com.example.bingyantest.fragment.RecycleViewFragment
 import com.example.bingyantest.objects.Friend
-import com.example.bingyantest.objects.Objects
 import java.util.ArrayList
 
 class AddFriend: AppCompatActivity() {
@@ -25,11 +22,12 @@ class AddFriend: AppCompatActivity() {
         setContentView(R.layout.activity_search)
         val dbHelper = UsersDatabaseHelper(this, "Users.db", 1)
         val backbtn = findViewById<ImageView>(R.id.searchback)
+        val searchbtn = findViewById<Button>(R.id.search)
         val searchText = findViewById<EditText>(R.id.searchtext)
         val db = dbHelper.writableDatabase
 
         db.insert("Users",null,initdatabase())
-        backbtn.setOnClickListener{
+        searchbtn.setOnClickListener{
             var flag = 0
             val cursor = db.query("Users",null,null,null,null,null,null)
             val inputText = searchText.text.toString()
