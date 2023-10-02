@@ -15,7 +15,8 @@
 
         <activity
             android:name=".activity.LoginActivity"
-            android:exported="true" >
+            android:exported="true"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,6 +45,16 @@
         </activity>
         <activity
             android:name=".activity.AddFriend"
+            android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".activity.NewFriend"
+            android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".activity.RegisterActivity"
             android:exported="true">
 
         </activity>

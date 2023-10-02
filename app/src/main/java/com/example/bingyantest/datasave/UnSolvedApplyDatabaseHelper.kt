@@ -10,8 +10,7 @@ class UnSolvedApplyDatabaseHelper(val context: Context, name: String, version: I
         private val createApplys = "create table UnSolvedApplys (" +
                 " id integer primary key autoincrement," +
                 "sender text," +
-                "receiver text," +
-                "ifagreed boolean)"
+                "receiver text)"
         override fun onCreate(db: SQLiteDatabase) {
             db.execSQL(createApplys)
             Toast.makeText(context, "Create succeeded", Toast.LENGTH_SHORT).show()

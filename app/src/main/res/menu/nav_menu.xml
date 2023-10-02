@@ -21,5 +21,9 @@
             android:id="@+id/navTask"
             android:icon="@drawable/nav_task"
             android:title="Tasks" />
+        <item
+            android:id = "@+id/navChange"
+            android:icon="@drawable/ic_settings"
+            android:title="修改信息"/>
     </group>
 </menu>

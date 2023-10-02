@@ -1,3 +1,3 @@
 package com.example.bingyantest.objects
 
-data class Users(val name: String, val account: String, val password: String, val imageId: Int, val email: String)
+data class Users(var name: String = "null", val account: String = "null", var password: String = "null", var imageId: String = "null", var email: String = "null")

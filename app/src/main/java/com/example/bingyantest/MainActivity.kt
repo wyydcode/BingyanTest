@@ -17,10 +17,12 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.bingyantest.activity.UserInformation
 import com.example.bingyantest.adapters.FriendAdapter
 import com.example.bingyantest.datasave.MyDatabaseHelper
 import com.example.bingyantest.fragment.ContactsFragment
 import com.example.bingyantest.fragment.MainFragment
+import com.example.bingyantest.fragment.NewFriendListFragment
 import com.example.bingyantest.objects.Friend
 import com.example.bingyantest.objects.MyObjects
 import com.example.bingyantest.objects.title.MainTitleLayout
@@ -47,11 +49,15 @@ class MainActivity : AppCompatActivity(),MyObjects.DataUpdateListener{
         val bottombar = findViewById<LinearLayout>(R.id.bottombar)
         val bottombutton1 = bottombar.findViewById<Button>(R.id.button1)
         val bottombutton2 = bottombar.findViewById<Button>(R.id.button2)
+        val bottombutton3 = bottombar.findViewById<Button>(R.id.button3)
         bottombutton1.setOnClickListener{
             replaceFragment(MainFragment())
         }
         bottombutton2.setOnClickListener{
             replaceFragment(ContactsFragment())
+        }
+        bottombutton3.setOnClickListener{
+            replaceFragment(NewFriendListFragment())
         }
         recyclerView.layoutManager = layoutManager
         titleHome.setOnClickListener {
@@ -59,9 +65,9 @@ class MainActivity : AppCompatActivity(),MyObjects.DataUpdateListener{
             Toast.makeText(this,"userimage",Toast.LENGTH_SHORT).show()//触发滑动菜单
         }
 
-        navView.setCheckedItem(R.id.navCall)
+        navView.setCheckedItem(R.id.navChange)
         navView.setNavigationItemSelectedListener {
-            drawerLayout.closeDrawers()
+            UserInformation.actionStart(this,MyObjects.userAccount)
             true
         }
 

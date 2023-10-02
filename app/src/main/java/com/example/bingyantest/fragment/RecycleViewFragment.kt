@@ -11,10 +11,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bingyantest.R
 import com.example.bingyantest.adapters.FriendAdapter
 import com.example.bingyantest.objects.Friend
+import com.example.bingyantest.objects.MyObjects
 
 
 class RecycleViewFragment(friendList:ArrayList<Friend>):Fragment() {
-    val friendList = friendList
+    val friendList = MyObjects.friendslist.value!!
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
