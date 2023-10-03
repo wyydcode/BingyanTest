@@ -12,6 +12,7 @@ import com.example.bingyantest.R
 import com.example.bingyantest.activity.ChatActivity
 import com.example.bingyantest.activity.NewFriend
 import com.example.bingyantest.objects.Friend
+import com.example.bingyantest.objects.MyObjects
 
 class NewFriendAdapter(val friendList: ArrayList<Friend>) : RecyclerView.Adapter<NewFriendAdapter.ViewHolder>() {
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -33,7 +34,7 @@ class NewFriendAdapter(val friendList: ArrayList<Friend>) : RecyclerView.Adapter
     }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val friends = friendList[position]
-        val uri = Uri.parse(friends.imageuri)
+        val uri  = MyObjects.getUriFromDrawableRes(holder.friendImage.context,R.drawable.add)
         holder.friendImage.setImageURI(uri)
         holder.friendName.text = friends.name
     }

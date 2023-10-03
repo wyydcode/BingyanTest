@@ -8,12 +8,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bingyantest.R
-import com.example.bingyantest.activity.ChatActivity
+import com.example.bingyantest.activity.FriendInformation
 import com.example.bingyantest.objects.Friend
 import com.example.bingyantest.objects.MyObjects
 
-
-class FriendAdapter(val friendList: ArrayList<Friend>) : RecyclerView.Adapter<FriendAdapter.ViewHolder>() {
+class AddFriendAdapter(val friendList: ArrayList<Friend>) : RecyclerView.Adapter<AddFriendAdapter.ViewHolder>() {
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val friendImage: ImageView = view.findViewById(R.id.friendImage)
         val friendName: TextView = view.findViewById(R.id.friendName)
@@ -27,20 +26,20 @@ class FriendAdapter(val friendList: ArrayList<Friend>) : RecyclerView.Adapter<Fr
             val friend = friendList[position]
             Toast.makeText(parent.context, "you clicked view ${friend.name}",
                 Toast.LENGTH_SHORT).show()
-            ChatActivity.actionStart(parent.context,friend.name,friend.account,friend.email,friend.imageuri)
+            FriendInformation.actionStart(parent.context,friend.name,friend.account,friend.email,friend.imageuri)
         }
         viewHolder.friendImage.setOnClickListener {
             val position = viewHolder.adapterPosition
             val friend = friendList[position]
             Toast.makeText(parent.context, "you clicked image ${friend.name}",
                 Toast.LENGTH_SHORT).show()
-            ChatActivity.actionStart(parent.context,friend.name,friend.account,friend.email,friend.imageuri)
+            FriendInformation.actionStart(parent.context,friend.name,friend.account,friend.email,friend.imageuri)
         }
         return viewHolder
     }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val friends = friendList[position]
-        val uri  = MyObjects.getUriFromDrawableRes(holder.friendImage.context,R.drawable.add)
+        val uri  = MyObjects.getUriFromDrawableRes(holder.friendImage.context, R.drawable.add)
         holder.friendImage.setImageURI(uri)
         holder.friendName.text = friends.name
     }

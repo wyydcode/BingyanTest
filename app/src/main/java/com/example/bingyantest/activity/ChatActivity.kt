@@ -1,7 +1,9 @@
 package com.example.bingyantest.activity
 
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -17,11 +19,12 @@ import java.time.LocalDateTime
 class ChatActivity : AppCompatActivity() {
     private val msgList = ArrayList<Msg>()
     private lateinit var friendaccount:String
+    private val userAccount = MyObjects.userAccount
     private var adapter: MsgAdapter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
-        friendaccount= intent.getStringExtra("name")!!
+        friendaccount= intent.getStringExtra("account")!!
         initMsg()
         val layoutManager = LinearLayoutManager(this)
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
@@ -38,18 +41,40 @@ class ChatActivity : AppCompatActivity() {
                 adapter?.notifyItemInserted(msgList.size - 1) // 当有新消息时，刷新RecyclerView中的显示
                 recyclerView.scrollToPosition(msgList.size - 1) // 将RecyclerView定位到最后一行
                 inputText.setText("") // 清空输入框中的内容
-
+                val db = MyObjects.dbHelper.writableDatabase
+                val values = ContentValues().apply {
+                    put("sender",userAccount)
+                    put("receiver",friendaccount)
+                    put("content",content)
+                    put("date",LocalDateTime.now().toString())
+                }
+                db.insertWithOnConflict("Chats",null,values,SQLiteDatabase.CONFLICT_IGNORE)
             }
         }
     }
 
     private fun initMsg() {
-        val msg1 = Msg(MyObjects.userAccount,friendaccount,"Hello guy.",LocalDateTime.now().toString(), Msg.TYPE_RECEIVED)
-        msgList.add(msg1)
-        val msg2 = Msg(MyObjects.userAccount,friendaccount,"Hello. Who is that?",LocalDateTime.now().toString(), Msg.TYPE_SENT)
-        msgList.add(msg2)
-        val msg3 = Msg(MyObjects.userAccount,friendaccount,"This is Tom. Nice talking to you. ",LocalDateTime.now().toString(), Msg.TYPE_RECEIVED)
-        msgList.add(msg3)
+        val db = MyObjects.dbHelper.writableDatabase
+        val query = "SELECT * FROM chats WHERE (sender = $userAccount AND receiver = $friendaccount) OR (sender = $friendaccount AND receiver = $userAccount)"
+        val cursor = db.rawQuery(query, null)
+        if (cursor.moveToFirst()) {
+            do {
+                // 处理查询结果
+                val sender = cursor.getString(cursor.getColumnIndexOrThrow("sender"))
+                val receiver = cursor.getString(cursor.getColumnIndexOrThrow("receiver"))
+                val content = cursor.getString(cursor.getColumnIndexOrThrow("content"))
+                val date = cursor.getString(cursor.getColumnIndexOrThrow("date"))
+                // 在这里进行处理，例如将结果添加到列表中
+                val type = if(receiver==friendaccount){
+                    Msg.TYPE_SENT
+                }else{
+                    Msg.TYPE_RECEIVED
+                }
+                val msg = Msg(sender,receiver,content,date,type)
+                msgList.add(msg)
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
     }
 
     companion object {

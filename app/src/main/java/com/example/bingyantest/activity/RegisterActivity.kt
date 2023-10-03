@@ -3,6 +3,7 @@ package com.example.bingyantest.activity
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -10,7 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.bingyantest.R
-import com.example.bingyantest.datasave.UsersDatabaseHelper
+import com.example.bingyantest.datasave.MyDatabaseHelper
 import com.example.bingyantest.objects.MyObjects
 import java.io.BufferedReader
 import java.io.BufferedWriter
@@ -48,13 +49,18 @@ class RegisterActivity:AppCompatActivity() {
     }
 
     fun saveData(context: Context,account: String, password: String){
-        val dbHelper = UsersDatabaseHelper(context,"Users",1)
+        val dbHelper = MyDatabaseHelper(context,"Users",1)
         val db = dbHelper.writableDatabase
         val values = ContentValues().apply {
+            put("name","null")
             put("account",account)
             put("password",password)
+            val uri  = MyObjects.getUriFromDrawableRes(context,R.drawable.add)
+            val imageuri = uri.toString()
+            put("imageuri",imageuri)
+            put("email","null")
         }
-        db.insert("Users",null,values)
+        db.insertWithOnConflict("Users",null,values, SQLiteDatabase.CONFLICT_IGNORE)
     }
     companion object {
         fun actionStart(context: Context) {

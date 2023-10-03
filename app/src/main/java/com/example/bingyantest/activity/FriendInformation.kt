@@ -3,6 +3,7 @@ package com.example.bingyantest.activity
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.database.sqlite.SQLiteDatabase
 import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
@@ -12,8 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.bingyantest.R
-import com.example.bingyantest.datasave.DeleteInformation
-import com.example.bingyantest.datasave.UnSolvedApplyDatabaseHelper
+import com.example.bingyantest.datasave.MyDatabaseHelper
 import com.example.bingyantest.objects.MyObjects
 
 class FriendInformation :AppCompatActivity(){
@@ -54,7 +54,7 @@ class FriendInformation :AppCompatActivity(){
             change.setBackgroundColor(Color.RED)
             change.setText("删除好友")
             change.setOnClickListener{
-                val dbHelper = DeleteInformation(this,"DeleteInformation",1)
+                val dbHelper = MyDatabaseHelper(this,"Users",1)
                 AlertDialog.Builder(this).apply {
                     setTitle("确定要删除这个好友吗")
                     setMessage("删除之后，你们将失去所有聊天记录，且无法像之前那样自由发送信息")
@@ -66,7 +66,7 @@ class FriendInformation :AppCompatActivity(){
                             put("sender",MyObjects.userAccount)
                             put("receiver",account.toString())
                         }
-                        db.insert("DeleteInformation",null,values)
+                        db.insertWithOnConflict("DeleteInformation",null,values, SQLiteDatabase.CONFLICT_IGNORE)
 
                         MyObjects.friendslist.value?.remove(MyObjects.query(account.toString()))
 
@@ -80,14 +80,14 @@ class FriendInformation :AppCompatActivity(){
         }
         else{//如果不是好友
             change.setOnClickListener{
-                val dbHelper = UnSolvedApplyDatabaseHelper(this,"Unsolved",1)
+                val dbHelper = MyDatabaseHelper(this,"Users",1)
                 Toast.makeText(this,"好友申请已发送",Toast.LENGTH_SHORT).show()
                 val db = dbHelper.writableDatabase
                 val values = ContentValues().apply {
                     put("sender",MyObjects.userAccount)
-                    put("receiver",account.toString())
+                    put("receiver",account.text.toString())
                 }
-                db.insert("UnsolvedApplys",null,values)
+                db.insertWithOnConflict("UnsolvedApplys",null,values,SQLiteDatabase.CONFLICT_IGNORE)
             }
         }
     }

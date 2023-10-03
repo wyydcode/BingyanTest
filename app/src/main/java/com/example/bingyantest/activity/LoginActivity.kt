@@ -10,11 +10,11 @@ import android.widget.Toast
 import com.example.bingyantest.MainActivity
 import com.example.bingyantest.R
 import com.example.bingyantest.datasave.MyDatabaseHelper
-import com.example.bingyantest.datasave.UsersDatabaseHelper
 import com.example.bingyantest.fragment.NoResultFragment
 import com.example.bingyantest.fragment.RecycleViewFragment
 import com.example.bingyantest.objects.Friend
 import com.example.bingyantest.objects.MyObjects
+import com.example.bingyantest.objects.Users
 
 class LoginActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,24 +50,34 @@ class LoginActivity : BaseActivity() {
                     editor.clear()
                 }
                 editor.apply()
-                val intent = Intent(this, MainActivity::class.java)
                 //初始化信息
-                MyObjects.appContext = this
+                MyObjects.initialize(this)
                 MyObjects.user = MyObjects.refreshUser(account)
-                MyObjects.appContext = this
                 MyObjects.userAccount = account
                 MyObjects.friendslist.value = ArrayList()
-                MyObjects.add(Friend("friend", "friend", "friend", "friend"))
-                MyObjects.newFriendList.add(
-                    Friend(
-                        "newFriend",
-                        "newFriend",
-                        "newFriend",
-                        "newFriend"
-                    )
-                )
-                MyObjects.initialize(this)
+                //MyObjects.add(Friend("friend", "friend", "friend", "friend"))
+
                 MyObjects.load()
+                /*val db = MyObjects.dbHelper.writableDatabase
+                var cursor = db.query("UnsolvedApplys", arrayOf("sender"),"receiver = ?",
+                    arrayOf("$account"),null,null,null)
+                val newFriendAccount = ArrayList<String>()
+                if (cursor.moveToFirst()) {
+                    do {
+                        // 遍历Cursor对象，取出数据并打印
+                        newFriendAccount.add(cursor.getString(cursor.getColumnIndexOrThrow("sender")))
+                    } while (cursor.moveToNext())
+                }
+                cursor.close()
+                MyObjects.usersList.forEach{
+                    if(it.account in newFriendAccount ){
+                        MyObjects.newFriendList.add(Friend(it.name,it.account,it.imageuri,it.email))
+                    }
+                }*/
+
+
+
+                val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
             } else {
@@ -84,7 +94,7 @@ class LoginActivity : BaseActivity() {
     }
 
     fun isLoginSucess(context: Context, inputAccount: String, inputPassword: String): Boolean {
-        val dbHelper = UsersDatabaseHelper(context, "Users", 1)
+        val dbHelper = MyDatabaseHelper(context, "Users", 1)
         val db = dbHelper.writableDatabase
         val cursor = db.query("Users", null, null, null, null, null, null)
         if (cursor.moveToFirst()) {

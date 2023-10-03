@@ -9,10 +9,11 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.bingyantest.R
-import com.example.bingyantest.datasave.UsersDatabaseHelper
+import com.example.bingyantest.datasave.MyDatabaseHelper
 import com.example.bingyantest.fragment.NoResultFragment
 import com.example.bingyantest.fragment.RecycleViewFragment
 import com.example.bingyantest.objects.Friend
+import com.example.bingyantest.objects.MyObjects
 import java.util.ArrayList
 
 class AddFriend: AppCompatActivity() {
@@ -20,13 +21,12 @@ class AddFriend: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
-        val dbHelper = UsersDatabaseHelper(this, "Users.db", 1)
+        val dbHelper = MyDatabaseHelper(this, "Users", 1)
         val backbtn = findViewById<ImageView>(R.id.searchback)
         val searchbtn = findViewById<Button>(R.id.search)
         val searchText = findViewById<EditText>(R.id.searchtext)
         val db = dbHelper.writableDatabase
 
-        db.insert("Users",null,initdatabase())
         searchbtn.setOnClickListener{
             var flag = 0
             val cursor = db.query("Users",null,null,null,null,null,null)
@@ -59,14 +59,5 @@ class AddFriend: AppCompatActivity() {
         transaction.replace(R.id.search_result, fragment)
         transaction.addToBackStack(null)
         transaction.commit()
-    }
-    fun initdatabase():ContentValues{
-        val values = ContentValues().apply {
-            put("name","Tom")
-            put("account","2857976554")
-            put("imageuri","666")
-            put("email","2857976554@qq.com")
-        }
-        return values
     }
 }

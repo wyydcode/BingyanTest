@@ -42,7 +42,6 @@ class MainActivity : AppCompatActivity(),MyObjects.DataUpdateListener{
         //设计点击头像效果
         val title = findViewById<MainTitleLayout>(R.id.titlelayout)
         val titleHome = title.findViewById<CircleImageView>(R.id.iconImage)
-        val dbHelper = MyDatabaseHelper(this,"Friends.db",1)
         val layoutManager = LinearLayoutManager(this)
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         //val fragmentLayout = findViewById<FrameLayout>(R.id.main_fragment)
