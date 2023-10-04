@@ -8,21 +8,21 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bingyantest.R
-import com.example.bingyantest.adapters.FriendAdapter
+import com.example.bingyantest.adapters.GroupsAdapter
 import com.example.bingyantest.objects.MyObjects
 
 class ContactsFragment : Fragment() {
-    val friendList = MyObjects.friendslist.value!!
+    val groupList = MyObjects.groupList
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view: View = inflater.inflate(R.layout.contacts_fragment, container, false)
+        val view: View = inflater.inflate(R.layout.group_member_item, container, false)
 
-        val recyclerView = view.findViewById<RecyclerView>(R.id.contacts_recyclerview)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.group_list_member_recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(activity)
-        recyclerView.adapter = FriendAdapter(friendList)
+        recyclerView.adapter = GroupsAdapter(groupList)
         return view
     }
 }

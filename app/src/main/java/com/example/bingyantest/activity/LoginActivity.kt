@@ -13,6 +13,7 @@ import com.example.bingyantest.datasave.MyDatabaseHelper
 import com.example.bingyantest.fragment.NoResultFragment
 import com.example.bingyantest.fragment.RecycleViewFragment
 import com.example.bingyantest.objects.Friend
+import com.example.bingyantest.objects.Group
 import com.example.bingyantest.objects.MyObjects
 import com.example.bingyantest.objects.Users
 
@@ -56,8 +57,8 @@ class LoginActivity : BaseActivity() {
                 MyObjects.userAccount = account
                 MyObjects.friendslist.value = ArrayList()
                 //MyObjects.add(Friend("friend", "friend", "friend", "friend"))
-
                 MyObjects.load()
+                MyObjects.groupList.add(Group("联系人", MyObjects.friendslist.value!!))
                 /*val db = MyObjects.dbHelper.writableDatabase
                 var cursor = db.query("UnsolvedApplys", arrayOf("sender"),"receiver = ?",
                     arrayOf("$account"),null,null,null)

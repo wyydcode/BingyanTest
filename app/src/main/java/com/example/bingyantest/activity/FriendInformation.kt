@@ -64,7 +64,7 @@ class FriendInformation :AppCompatActivity(){
                         val db = dbHelper.writableDatabase
                         val values = ContentValues().apply {
                             put("sender",MyObjects.userAccount)
-                            put("receiver",account.toString())
+                            put("receiver",account.text.toString())
                         }
                         db.insertWithOnConflict("DeleteInformation",null,values, SQLiteDatabase.CONFLICT_IGNORE)
 

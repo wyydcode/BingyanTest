@@ -24,7 +24,7 @@ class MyDatabaseHelper(val context: Context, name: String, version: Int) :
             " id integer primary key autoincrement," +
             "sender text," +
             "receiver text,"+
-            "ifagree integer)"
+            "ifagreed integer)"
     private val createUnApplys = "create table UnSolvedApplys (" +
             " id integer primary key autoincrement," +
             "sender text," +
@@ -32,6 +32,7 @@ class MyDatabaseHelper(val context: Context, name: String, version: Int) :
     private val createFriends = "create table Friends (" +
             " id integer primary key autoincrement," +
             "user text," +
+            "groups text," +
             "name text," +
             "account text," +
             "email text," +

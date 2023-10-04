@@ -20,9 +20,9 @@ class RecycleViewFragment(val friendList:ArrayList<Friend>):Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view: View = inflater.inflate(com.example.bingyantest.R.layout.recycleview_fragment, container, false)
+        val view: View = inflater.inflate(R.layout.recyclerview_fragment, container, false)
 
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerViewfragment)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerview_fragment)
         recyclerView.layoutManager = LinearLayoutManager(activity)
         recyclerView.adapter = AddFriendAdapter(friendList)
         return view

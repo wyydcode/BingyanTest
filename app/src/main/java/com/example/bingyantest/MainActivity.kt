@@ -21,6 +21,7 @@ import com.example.bingyantest.activity.UserInformation
 import com.example.bingyantest.adapters.FriendAdapter
 import com.example.bingyantest.datasave.MyDatabaseHelper
 import com.example.bingyantest.fragment.ContactsFragment
+import com.example.bingyantest.fragment.InformFragment
 import com.example.bingyantest.fragment.MainFragment
 import com.example.bingyantest.fragment.NewFriendListFragment
 import com.example.bingyantest.objects.Friend
@@ -29,26 +30,25 @@ import com.example.bingyantest.objects.title.MainTitleLayout
 import com.google.android.material.navigation.NavigationView
 import de.hdodenhof.circleimageview.CircleImageView
 
-class MainActivity : AppCompatActivity(),MyObjects.DataUpdateListener{
-    private var friendList = ArrayList<Friend>()
+class MainActivity : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportActionBar?.hide()
-        MyObjects.registerDataUpdateListener(this)
         val navView = findViewById<NavigationView>(R.id.navView)
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawerLayout)
         //设计点击头像效果
         val title = findViewById<MainTitleLayout>(R.id.titlelayout)
         val titleHome = title.findViewById<CircleImageView>(R.id.iconImage)
-        val layoutManager = LinearLayoutManager(this)
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+        //val layoutManager = LinearLayoutManager(this)
+        //val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         //val fragmentLayout = findViewById<FrameLayout>(R.id.main_fragment)
         val bottombar = findViewById<LinearLayout>(R.id.bottombar)
         val bottombutton1 = bottombar.findViewById<Button>(R.id.button1)
         val bottombutton2 = bottombar.findViewById<Button>(R.id.button2)
         val bottombutton3 = bottombar.findViewById<Button>(R.id.button3)
+        val bottombutton4 = bottombar.findViewById<Button>(R.id.button4)
         bottombutton1.setOnClickListener{
             replaceFragment(MainFragment())
         }
@@ -58,7 +58,10 @@ class MainActivity : AppCompatActivity(),MyObjects.DataUpdateListener{
         bottombutton3.setOnClickListener{
             replaceFragment(NewFriendListFragment())
         }
-        recyclerView.layoutManager = layoutManager
+        bottombutton4.setOnClickListener{
+            replaceFragment(InformFragment())
+        }
+        //recyclerView.layoutManager = layoutManager
         titleHome.setOnClickListener {
             drawerLayout.openDrawer(Gravity.LEFT)
             Toast.makeText(this,"userimage",Toast.LENGTH_SHORT).show()//触发滑动菜单
@@ -70,7 +73,7 @@ class MainActivity : AppCompatActivity(),MyObjects.DataUpdateListener{
             true
         }
 
-        refresh(recyclerView)
+        //refresh(recyclerView)
     }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar, menu)
@@ -90,24 +93,12 @@ class MainActivity : AppCompatActivity(),MyObjects.DataUpdateListener{
         return true
     }
     private fun refresh(recyclerView: RecyclerView){
-        val adapter = FriendAdapter(friendList)
+        val adapter = FriendAdapter(MyObjects.friendslist.value!!)
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = adapter
     }
-    inner class AgreeBroadcast: BroadcastReceiver(){
-        override fun onReceive(context: Context, intent: Intent) {
-            friendList = MyObjects.friendslist.value!!
-            val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-            refresh(recyclerView)
-        }
-    }
 
-    override fun onDataUpdate() {
-        friendList = MyObjects.friendslist.value!!
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        refresh(recyclerView)
-    }
     private fun replaceFragment(fragment: Fragment) {
         val fragmentManager = supportFragmentManager
         val transaction = fragmentManager.beginTransaction()

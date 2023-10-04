@@ -16,9 +16,10 @@ object MyObjects  {
     public var newFriendList = ArrayList<Friend>()
     public var usersList = ArrayList<Users>()
     public var friendslist = MutableLiveData<ArrayList<Friend>>()
-    public val informList = ArrayList<Friend>()
+    public var informList = ArrayList<Friend>()
     public lateinit var userAccount: String
     public lateinit var user:Users
+    public var groupList = ArrayList<Group>()
     fun refreshUser(account: String):Users{
         val dbHelper = MyDatabaseHelper(appContext,"Users",1)
         val db = dbHelper.writableDatabase
@@ -60,6 +61,8 @@ object MyObjects  {
         val db = dbHelper.writableDatabase
         val values = ContentValues().apply {
             // 开始组装第一条数据
+            put("user", userAccount)
+            put("groups","联系人")
             put("name", friend.name)
             put("account", friend.account)
             put("email", friend.email)
@@ -96,9 +99,8 @@ object MyObjects  {
         }
         cursor.close()
 
-        val db1 = dbHelper.writableDatabase
         // Friends
-        val cursor1 = db1.query("Friends", null, "user = ?", arrayOf("$userAccount"), null, null, null)
+        val cursor1 = db.query("Friends", null, "user = ?", arrayOf("$userAccount"), null, null, null)
         if (cursor1.moveToFirst()) {
             do {
                 // 遍历Cursor对象，取出数据并打印
@@ -106,13 +108,27 @@ object MyObjects  {
                 val account = cursor1.getString(cursor1.getColumnIndexOrThrow("account"))
                 val email = cursor1.getString(cursor1.getColumnIndexOrThrow("email"))
                 val imageuri = cursor1.getString(cursor1.getColumnIndexOrThrow("imageuri"))
-                friendslist.value?.add(Friend(name,account,imageuri,email))
+                val group = cursor1.getString(cursor1.getColumnIndexOrThrow("groups"))
+                val friend = Friend(name,account,imageuri,email)
+                var find = false
+                groupList.forEach{
+                    if(it.name==group){
+                        it.member.add(friend)
+                        find = true
+                        return@forEach
+                    }
+                }
+                if(!find&&group!=null){
+                    val newGroup = Group(group,ArrayList<Friend>())
+                    newGroup.member.add(friend)
+                    groupList.add(newGroup)
+                }
+                friendslist.value?.add(friend)
             } while (cursor1.moveToNext())
         }
         cursor1.close()
 
-        val db2 = dbHelper.writableDatabase
-        val cursor2 = db2.query("UnSolvedApplys", arrayOf("sender"),"receiver = ? ", arrayOf("${userAccount}"),null,null,null)
+        val cursor2 = db.query("UnSolvedApplys", arrayOf("sender"),"receiver = ? ", arrayOf("${userAccount}"),null,null,null)
         if(cursor2.moveToFirst()){
             do{
                 newFriendAccount.add(cursor2.getString(cursor2.getColumnIndexOrThrow("sender")).toString())
@@ -124,10 +140,10 @@ object MyObjects  {
                 newFriendList.add(Friend(it.name,it.account,it.imageuri,it.email))
             }
         }
-        val cursor3 = db.query("SolvedApplys", arrayOf("sender"),"receiver = ?", arrayOf("$userAccount"),null,null,null)
+        val cursor3 = db.query("SolvedApplys", arrayOf("receiver"),"sender = ?", arrayOf("$userAccount"),null,null,null)
         if(cursor3.moveToFirst()){
             do{
-                val friendaccount = cursor3.getString(cursor3.getColumnIndexOrThrow("sender")).toString()
+                val friendaccount = cursor3.getString(cursor3.getColumnIndexOrThrow("receiver")).toString()
                 usersList.forEach{
                     if(friendaccount==it.account){
                         add(Friend(it.name,it.account,it.imageuri,it.email))
@@ -135,6 +151,14 @@ object MyObjects  {
                     }
                 }
             }while (cursor3.moveToNext())
+        }
+        val cursor4 = db.query("DeleteInformation", arrayOf("sender"),"receiver = ?", arrayOf("$userAccount"),null,null,null)
+        if(cursor4.moveToFirst()){
+            do{
+                val sender = cursor4.getString(cursor4.getColumnIndexOrThrow("sender"))
+                remove(sender)
+                informList.add(query(sender))
+            }while (cursor4.moveToNext())
         }
     }
     fun initialize(context: Context){

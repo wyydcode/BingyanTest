@@ -14,14 +14,14 @@ import com.example.bingyantest.objects.Friend
 import com.example.bingyantest.objects.MyObjects
 
 
-class FriendAdapter(val friendList: ArrayList<Friend>) : RecyclerView.Adapter<FriendAdapter.ViewHolder>() {
+class ContactsAdapter(val friendList: ArrayList<Friend>) : RecyclerView.Adapter<ContactsAdapter.ViewHolder>() {
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val friendImage: ImageView = view.findViewById(R.id.friendImage)
         val friendName: TextView = view.findViewById(R.id.friendName)
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.friend_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.friend_item, parent, false)
         val viewHolder = ViewHolder(view)
         viewHolder.itemView.setOnClickListener {
             val position = viewHolder.adapterPosition
@@ -39,11 +39,13 @@ class FriendAdapter(val friendList: ArrayList<Friend>) : RecyclerView.Adapter<Fr
         }
         return viewHolder
     }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val friends = friendList[position]
-        val uri  = MyObjects.getUriFromDrawableRes(holder.friendImage.context,R.drawable.add)
+        val uri = MyObjects.getUriFromDrawableRes(holder.friendImage.context, R.drawable.add)
         holder.friendImage.setImageURI(uri)
         holder.friendName.text = friends.name
     }
+
     override fun getItemCount() = friendList.size
 }

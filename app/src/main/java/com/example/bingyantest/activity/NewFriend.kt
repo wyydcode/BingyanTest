@@ -9,6 +9,7 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.example.bingyantest.R
 import com.example.bingyantest.datasave.MyDatabaseHelper
+import com.example.bingyantest.objects.Friend
 import com.example.bingyantest.objects.MyObjects
 
 class NewFriend:AppCompatActivity() {
@@ -26,9 +27,13 @@ class NewFriend:AppCompatActivity() {
                 put("ifagreed",1)
             }
             db.insertWithOnConflict("SolvedApplys",null,values,SQLiteDatabase.CONFLICT_IGNORE)
-            db.delete("UnSolvedApplys","sender = ? && receiver = ?", arrayOf("$account","${MyObjects.userAccount}"))
-
+            db.delete("UnSolvedApplys","sender = ? AND receiver = ?", arrayOf("$account","${MyObjects.userAccount}"))
             MyObjects.add(MyObjects.queryNewFriend(account))
+            MyObjects.newFriendList.remove(MyObjects.queryNewFriend(account))
+
+            MyObjects.groupList[0].member.add(MyObjects.query(account))//更新联系人
+
+            MyObjects.notifyDataUpdate()
         }
         val refuse = findViewById<Button>(R.id.refuse)
         refuse.setOnClickListener{
@@ -38,7 +43,9 @@ class NewFriend:AppCompatActivity() {
                 put("ifagreed",0)
             }
             db.insertWithOnConflict("SolvedApplys",null,values,SQLiteDatabase.CONFLICT_IGNORE)
-            db.delete("UnSolvedApplys","sender = ? && receiver = ?", arrayOf("$account","${MyObjects.userAccount}"))
+            db.delete("UnSolvedApplys","sender = ? AND receiver = ?", arrayOf("$account","${MyObjects.userAccount}"))
+            MyObjects.newFriendList.remove(MyObjects.queryNewFriend(account))
+            MyObjects.notifyDataUpdate()
         }
     }
     companion object {
