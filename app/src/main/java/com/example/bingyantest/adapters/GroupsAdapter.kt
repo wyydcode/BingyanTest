@@ -13,6 +13,7 @@ import com.example.bingyantest.objects.Group
 class GroupsAdapter (val groupList: ArrayList<Group>) : RecyclerView.Adapter<GroupsAdapter.ViewHolder>() {
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val groupItem: RecyclerView = view.findViewById(R.id.group_item)
+        val groupName = view.findViewById<TextView>(R.id.group_name)
         //val groupName: TextView = view.findViewById(R.id.group_name)
         init{
             groupItem.layoutManager = LinearLayoutManager(view.context)
@@ -37,6 +38,7 @@ class GroupsAdapter (val groupList: ArrayList<Group>) : RecyclerView.Adapter<Gro
         val group = groupList[position]
         val contactsAdapter = ContactsAdapter(group.member)
         holder.groupItem.adapter = contactsAdapter
+        holder.groupName.text = groupList[position].name
         if(group.isExpand){
             holder.groupItem.visibility = View.VISIBLE
         }else{

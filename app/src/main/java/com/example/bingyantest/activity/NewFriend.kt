@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
+import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
@@ -11,12 +12,15 @@ import com.example.bingyantest.R
 import com.example.bingyantest.datasave.MyDatabaseHelper
 import com.example.bingyantest.objects.Friend
 import com.example.bingyantest.objects.MyObjects
+import de.hdodenhof.circleimageview.CircleImageView
 
-class NewFriend:AppCompatActivity() {
+class NewFriend:BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.new_friend)
         val account = intent.getStringExtra("account").toString()
+        val icon = findViewById<CircleImageView>(R.id.iconImage)
+        icon.setImageURI(Uri.parse(intent.getStringExtra("imageuri")))
         val agree = findViewById<Button>(R.id.agree)
         val dbHelper = MyDatabaseHelper(this,"Users",1)
         val db = dbHelper.writableDatabase
@@ -30,8 +34,9 @@ class NewFriend:AppCompatActivity() {
             db.delete("UnSolvedApplys","sender = ? AND receiver = ?", arrayOf("$account","${MyObjects.userAccount}"))
             MyObjects.add(MyObjects.queryNewFriend(account))
             MyObjects.newFriendList.remove(MyObjects.queryNewFriend(account))
-
-            MyObjects.groupList[0].member.add(MyObjects.query(account))//更新联系人
+            //?
+            val temp = MyObjects.groupList[0].member
+            temp.add(MyObjects.query(account))//更新联系人
 
             MyObjects.notifyDataUpdate()
         }

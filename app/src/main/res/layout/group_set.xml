@@ -1,45 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    android:padding="10dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal"
-        android:textSize="30dp"
-        android:textColor="@color/white"
-        android:background="@color/unchecked"
-        android:text = "注册新用户"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10dp"/>
     <EditText
-        android:id = "@+id/password1"
+        android:id = "@+id/new_group_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="30dp"
-        android:hint = "请输入密码"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10dp"/>
-    <EditText
-        android:id = "@+id/password2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="30dp"
-        android:hint = "请确认你的密码"/>
+        android:hint = "请输入新的分组名"
+        android:background="@drawable/edit_background"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"/>
     <Button
-        android:id = "@+id/register"
+        android:id = "@+id/new_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/button"
+        android:textColor="@color/white"
+        android:text = "新建分组并添加"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="30dp"
+        android:background="@color/unchecked"
         android:textColor="@color/white"
-        android:text = "注册"/>
+        android:text="选择已有分组"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id = "@+id/group_set_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>

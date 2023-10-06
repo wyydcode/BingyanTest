@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <color name = "unchecked">#0090ff</color>
+    <color name = "checked">#ffffff</color>
     <color name="colorPrimary">#3F51B5</color><!--首要颜色-->
     <color name="colorPrimaryDark">#303F9F</color><!--首要颜色暗色-->
     <color name="colorAccent">#FF4081</color><!--色彩强调-->

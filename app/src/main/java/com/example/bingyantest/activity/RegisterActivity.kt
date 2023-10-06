@@ -22,7 +22,7 @@ import java.lang.StringBuilder
 import java.util.Random
 import java.util.UUID
 
-class RegisterActivity:AppCompatActivity() {
+class RegisterActivity:BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
@@ -40,7 +40,7 @@ class RegisterActivity:AppCompatActivity() {
                     setCancelable(false)
                     setPositiveButton("确定") { dialog, which ->//删除
                         Toast.makeText(context,"注册成功", Toast.LENGTH_SHORT).show()
-                        LoginActivity.actionStart(context,account)
+                        LoginActivity.actionStart(context)
                     }
                     show()
                 }

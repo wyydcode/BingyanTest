@@ -1,5 +1,6 @@
 package com.example.bingyantest.adapters
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,7 +43,8 @@ class ContactsAdapter(val friendList: ArrayList<Friend>) : RecyclerView.Adapter<
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val friends = friendList[position]
-        val uri = MyObjects.getUriFromDrawableRes(holder.friendImage.context, R.drawable.add)
+        //val uri = MyObjects.getUriFromDrawableRes(holder.friendImage.context, R.drawable.add)
+        val uri = Uri.parse(friends.imageuri)
         holder.friendImage.setImageURI(uri)
         holder.friendName.text = friends.name
     }

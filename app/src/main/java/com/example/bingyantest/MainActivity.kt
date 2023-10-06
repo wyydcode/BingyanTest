@@ -1,15 +1,10 @@
 package com.example.bingyantest
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.view.GravityCompat
@@ -17,20 +12,19 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.bingyantest.activity.BaseActivity
 import com.example.bingyantest.activity.UserInformation
 import com.example.bingyantest.adapters.FriendAdapter
-import com.example.bingyantest.datasave.MyDatabaseHelper
 import com.example.bingyantest.fragment.ContactsFragment
 import com.example.bingyantest.fragment.InformFragment
 import com.example.bingyantest.fragment.MainFragment
 import com.example.bingyantest.fragment.NewFriendListFragment
-import com.example.bingyantest.objects.Friend
 import com.example.bingyantest.objects.MyObjects
 import com.example.bingyantest.objects.title.MainTitleLayout
 import com.google.android.material.navigation.NavigationView
 import de.hdodenhof.circleimageview.CircleImageView
 
-class MainActivity : AppCompatActivity(){
+class MainActivity : BaseActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,10 +39,10 @@ class MainActivity : AppCompatActivity(){
         //val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         //val fragmentLayout = findViewById<FrameLayout>(R.id.main_fragment)
         val bottombar = findViewById<LinearLayout>(R.id.bottombar)
-        val bottombutton1 = bottombar.findViewById<Button>(R.id.button1)
-        val bottombutton2 = bottombar.findViewById<Button>(R.id.button2)
-        val bottombutton3 = bottombar.findViewById<Button>(R.id.button3)
-        val bottombutton4 = bottombar.findViewById<Button>(R.id.button4)
+        val bottombutton1 = bottombar.findViewById<ImageView>(R.id.button1)
+        val bottombutton2 = bottombar.findViewById<ImageView>(R.id.button2)
+        val bottombutton3 = bottombar.findViewById<ImageView>(R.id.button3)
+        val bottombutton4 = bottombar.findViewById<ImageView>(R.id.button4)
         bottombutton1.setOnClickListener{
             replaceFragment(MainFragment())
         }
@@ -74,23 +68,6 @@ class MainActivity : AppCompatActivity(){
         }
 
         //refresh(recyclerView)
-    }
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.toolbar, menu)
-        return true
-    }
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val drawerLayout = findViewById<DrawerLayout>(R.id.drawerLayout)
-        when (item.itemId) {
-            android.R.id.home -> drawerLayout.openDrawer(GravityCompat.START)
-            R.id.backup -> Toast.makeText(this, "You clicked Backup",
-                Toast.LENGTH_SHORT).show()
-            R.id.delete -> Toast.makeText(this, "You clicked Delete",
-                Toast.LENGTH_SHORT).show()
-            R.id.settings -> Toast.makeText(this, "You clicked Settings",
-                Toast.LENGTH_SHORT).show()
-        }
-        return true
     }
     private fun refresh(recyclerView: RecyclerView){
         val adapter = FriendAdapter(MyObjects.friendslist.value!!)

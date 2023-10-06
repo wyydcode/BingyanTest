@@ -56,6 +56,9 @@ object MyObjects  {
         return Friend("error","error","error","error")
     }
     fun add(friend:Friend){
+        if(friendslist.value?.contains(friend) == true){
+            return
+        }
         friendslist.value?.add(friend)
         val dbHelper = MyDatabaseHelper(appContext,"Users",1)
         val db = dbHelper.writableDatabase
@@ -150,6 +153,7 @@ object MyObjects  {
                         return@forEach
                     }
                 }
+                db.delete("SolvedApplys","sender = ?", arrayOf("$userAccount"))
             }while (cursor3.moveToNext())
         }
         val cursor4 = db.query("DeleteInformation", arrayOf("sender"),"receiver = ?", arrayOf("$userAccount"),null,null,null)
@@ -203,6 +207,17 @@ object MyObjects  {
         val path = ContentResolver.SCHEME_ANDROID_RESOURCE + "://"+ resources.getResourcePackageName(id) + "/"+ resources.getResourceTypeName(id) + "/"+ resources.getResourceEntryName(id)
         return Uri.parse(path);
     }
+    fun reset() {
+        newFriendAccount.clear()
+        listeners.clear()
+        newFriendList.clear()
+        usersList.clear()
+        friendslist.value?.clear()
+        informList.clear()
+        userAccount = ""
+        groupList.clear()
+    }
+
     interface DataUpdateListener{
         fun onDataUpdate()
     }

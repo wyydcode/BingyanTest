@@ -5,7 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -15,8 +17,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.bingyantest.R
 import com.example.bingyantest.datasave.MyDatabaseHelper
 import com.example.bingyantest.objects.MyObjects
+import de.hdodenhof.circleimageview.CircleImageView
 
-class FriendInformation :AppCompatActivity(){
+class FriendInformation :BaseActivity(){
     companion object {
         fun actionStart(context: Context, name: String, account: String, email: String, imageuri: String) {
             val intent = Intent(context, FriendInformation::class.java)
@@ -33,11 +36,16 @@ class FriendInformation :AppCompatActivity(){
         val name = findViewById<TextView>(R.id.fname)
         val account = findViewById<TextView>(R.id.faccount)
         val email = findViewById<TextView>(R.id.femail)
-        val image = findViewById<ImageView>(R.id.fimage)
+        val image = findViewById<CircleImageView>(R.id.fimage)
         val change = findViewById<Button>(R.id.change)
         name.text = intent.getStringExtra("name")
         account.text = intent.getStringExtra("account")
         email.text = intent.getStringExtra(("email"))
+        image.setImageURI(Uri.parse(intent.getStringExtra("imageuri")))
+        val groupSet = findViewById<Button>(R.id.group_set)
+        groupSet.setOnClickListener {
+            GroupSet.actionStart(this, intent.getStringExtra("name")!!, intent.getStringExtra("account")!!, intent.getStringExtra("email")!!,intent.getStringExtra("imageuri")!!)
+        }
 
 
 
@@ -89,6 +97,7 @@ class FriendInformation :AppCompatActivity(){
                 }
                 db.insertWithOnConflict("UnsolvedApplys",null,values,SQLiteDatabase.CONFLICT_IGNORE)
             }
+            groupSet.visibility = View.GONE
         }
     }
 }

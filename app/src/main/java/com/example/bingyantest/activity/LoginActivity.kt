@@ -58,7 +58,7 @@ class LoginActivity : BaseActivity() {
                 MyObjects.friendslist.value = ArrayList()
                 //MyObjects.add(Friend("friend", "friend", "friend", "friend"))
                 MyObjects.load()
-                MyObjects.groupList.add(Group("联系人", MyObjects.friendslist.value!!))
+                //MyObjects.groupList.add(Group("联系人", MyObjects.friendslist.value!!))
                 /*val db = MyObjects.dbHelper.writableDatabase
                 var cursor = db.query("UnsolvedApplys", arrayOf("sender"),"receiver = ?",
                     arrayOf("$account"),null,null,null)
@@ -117,7 +117,7 @@ class LoginActivity : BaseActivity() {
 
 
     companion object {
-        fun actionStart(context: Context, account: String) {
+        fun actionStart(context: Context) {
             val intent = Intent(context, LoginActivity::class.java)
             context.startActivity(intent)
         }

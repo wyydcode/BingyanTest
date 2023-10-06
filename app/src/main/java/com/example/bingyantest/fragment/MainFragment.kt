@@ -27,6 +27,7 @@ class MainFragment :Fragment(),MyObjects.DataUpdateListener{
     }
 
     override fun onDataUpdate() {
-        adapter?.notifyItemInserted(MyObjects.friendslist.value!!.size-1)
+        adapter?.notifyDataSetChanged()
+        //adapter?.notifyItemInserted(MyObjects.friendslist.value!!.size-1)
     }
 }

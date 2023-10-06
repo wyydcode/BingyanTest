@@ -16,7 +16,7 @@ import com.example.bingyantest.objects.Friend
 import com.example.bingyantest.objects.MyObjects
 import java.util.ArrayList
 
-class AddFriend: AppCompatActivity() {
+class AddFriend: BaseActivity() {
     private val friendList = ArrayList<Friend>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

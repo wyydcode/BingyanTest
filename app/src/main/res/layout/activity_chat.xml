@@ -12,6 +12,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
+        <ImageView
+            android:id="@+id/picture_send"
+            android:layout_width="47dp"
+            android:layout_height="47dp"
+            android:src="@drawable/add" />
         <EditText
             android:id="@+id/inputText"
             android:layout_width="0dp"

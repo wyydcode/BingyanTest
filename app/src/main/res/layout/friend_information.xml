@@ -3,32 +3,100 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10dp"
     android:background="#d8e0e8" >
-   <ImageView
-       android:id = "@+id/fimage"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:layout_gravity="top"
-       />
-    <TextView
-        android:id = "@+id/fname"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/fimage"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/nav_icon"
+        android:layout_gravity="center_horizontal"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="name"/>
-    <TextView
-        android:id = "@+id/faccount"
+        android:background="@color/mintcream"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textSize="30dp"
+            android:text="昵称"/>
+        <TextView
+            android:id = "@+id/fname"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textSize="30dp"
+            android:text="name"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"/>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="account"/>
-    <TextView
-        android:id = "@+id/femail"
+        android:background="@color/mintcream"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textSize="30dp"
+            android:text="账号"/>
+        <TextView
+            android:id = "@+id/faccount"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textSize="30dp"
+            android:text="account"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"/>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="email"/>
+        android:background="@color/mintcream"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textSize="30dp"
+            android:text="邮箱"/>
+        <TextView
+            android:id = "@+id/femail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textSize="30dp"
+            android:text="email"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id = "@+id/change"
+        android:textSize="30dp"
         android:text = "添加好友"
-        android:background="@color/blue"/>
+        android:background="@color/unchecked"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id = "@+id/group_set"
+        android:textSize="30dp"
+        android:text = "设置分组"
+        android:background="@color/unchecked"/>
 </LinearLayout>

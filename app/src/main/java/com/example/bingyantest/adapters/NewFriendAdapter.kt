@@ -34,7 +34,8 @@ class NewFriendAdapter(val friendList: ArrayList<Friend>) : RecyclerView.Adapter
     }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val friends = friendList[position]
-        val uri  = MyObjects.getUriFromDrawableRes(holder.friendImage.context,R.drawable.add)
+        //val uri  = MyObjects.getUriFromDrawableRes(holder.friendImage.context,R.drawable.add)
+        val uri = Uri.parse(friends.imageuri)
         holder.friendImage.setImageURI(uri)
         holder.friendName.text = friends.name
     }

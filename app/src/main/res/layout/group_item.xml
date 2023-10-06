@@ -10,9 +10,17 @@
         android:layout_gravity="center_horizontal"
         android:text = "联系人"
         android:textSize="20dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#e0e0e0" />
     <androidx.recyclerview.widget.RecyclerView
         android:id = "@+id/group_item"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#e0e0e0" />
 </LinearLayout>
