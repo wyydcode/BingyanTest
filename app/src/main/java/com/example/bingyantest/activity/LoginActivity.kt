@@ -1,12 +1,16 @@
 package com.example.bingyantest.activity
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.example.bingyantest.MainActivity
 import com.example.bingyantest.R
 import com.example.bingyantest.datasave.MyDatabaseHelper
@@ -18,10 +22,16 @@ import com.example.bingyantest.objects.MyObjects
 import com.example.bingyantest.objects.Users
 
 class LoginActivity : BaseActivity() {
+
+    private val PERMISSION_REQUEST_CODE = 1001
+    private val PICK_IMAGE_REQUEST_CODE = 1002
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         supportActionBar?.hide()
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), PERMISSION_REQUEST_CODE)
+        }
         val prefs = getPreferences(Context.MODE_PRIVATE)
         val isRemember = prefs.getBoolean("remember_password", false)
         val accountEdit = findViewById<EditText>(R.id.accountEdit)
@@ -115,7 +125,23 @@ class LoginActivity : BaseActivity() {
         cursor.close()
         return false
     }
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
+        when (requestCode) {
+            PERMISSION_REQUEST_CODE -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // 授权成功
+                } else {
+                    // 授权失败
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), PERMISSION_REQUEST_CODE)
+                    }
+                    Toast.makeText(this, "需要读取外部存储权限", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
 
     companion object {
         fun actionStart(context: Context) {

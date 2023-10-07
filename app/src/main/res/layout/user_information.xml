@@ -33,7 +33,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="5dp"/>
-    <EditText
+    <TextView
         android:id = "@+id/user_account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

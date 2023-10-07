@@ -17,6 +17,7 @@ import android.provider.MediaStore
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -43,10 +44,11 @@ class UserInformation : BaseActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.user_information)
         val name = findViewById<EditText>(R.id.user_name)
-        val account = findViewById<EditText>(R.id.user_account)
+        val account = findViewById<TextView>(R.id.user_account)
         val email = findViewById<EditText>(R.id.user_email)
         imageView = findViewById<CircleImageView>(R.id.user_image)
         imageView.setImageURI(Uri.parse(MyObjects.user.imageuri))
+
         imageView.setOnClickListener{
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
             intent.addCategory(Intent.CATEGORY_OPENABLE)

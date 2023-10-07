@@ -170,6 +170,13 @@ object MyObjects  {
             do{
                 val sender = cursor4.getString(cursor4.getColumnIndexOrThrow("sender"))
                 remove(sender)
+                groupList.forEach{item->
+                    item.member.forEach{
+                        if(sender==it.account){
+                            item.member.remove(queryInformation(sender))
+                        }
+                    }
+                }
                 informList.add(queryInformation(sender))
             }while (cursor4.moveToNext())
         }

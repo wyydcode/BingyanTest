@@ -39,15 +39,10 @@ class NewFriend:BaseActivity() {
             temp.add(MyObjects.query(account))//更新联系人
 
             MyObjects.notifyDataUpdate()
+            this.finish()
         }
         val refuse = findViewById<Button>(R.id.refuse)
         refuse.setOnClickListener{
-            val values = ContentValues().apply {
-                put("sender",account)
-                put("receiver",MyObjects.userAccount)
-                put("ifagreed",0)
-            }
-            db.insertWithOnConflict("SolvedApplys",null,values,SQLiteDatabase.CONFLICT_IGNORE)
             db.delete("UnSolvedApplys","sender = ? AND receiver = ?", arrayOf("$account","${MyObjects.userAccount}"))
             MyObjects.newFriendList.remove(MyObjects.queryNewFriend(account))
             MyObjects.notifyDataUpdate()

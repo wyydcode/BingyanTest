@@ -108,4 +108,20 @@ class MainActivity : BaseActivity() {
         val menuItem = menu?.findItem(itemId)
         menuItem?.title = newText
     }
+
+    override fun onResume() {
+        super.onResume()
+        val drawerLayout = findViewById<DrawerLayout>(R.id.drawerLayout)
+        //设计点击头像效果
+        navigationView = drawerLayout.findViewById<NavigationView>(R.id.navView)
+        val imageView = navigationView.getHeaderView(0).findViewById<CircleImageView>(R.id.nav_iconImage)
+        imageView.setImageURI(Uri.parse(MyObjects.user.imageuri))
+        menu = navigationView.menu
+        val title = findViewById<MainTitleLayout>(R.id.titlelayout)
+        val titleHome = title.findViewById<CircleImageView>(R.id.iconImage)
+        titleHome.setImageURI(Uri.parse(MyObjects.user.imageuri))
+        changeMenuItemText(R.id.navName,"${MyObjects.user.name}")
+        changeMenuItemText(R.id.navAccount,"${MyObjects.user.account}")
+        changeMenuItemText(R.id.navMail,"${MyObjects.user.email}")
+    }
 }
