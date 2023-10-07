@@ -1,5 +1,6 @@
 package com.example.bingyantest.adapters
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,11 +42,14 @@ class MsgAdapter(val msgList: List<Msg>) : RecyclerView.Adapter<RecyclerView.Vie
             is LeftViewHolder -> {
                 holder.leftMsg.text = msg.content
                 val icon = holder.itemView.findViewById<CircleImageView>(R.id.iconImage)
+                icon.setImageURI(Uri.parse(friend.imageuri))
                 icon.setOnClickListener{
                     FriendInformation.actionStart(holder.itemView.context,friend.name,friend.account,friend.email,friend.imageuri)
                 }
             }
             is RightViewHolder -> {
+                val icon = holder.itemView.findViewById<CircleImageView>(R.id.iconImage)
+                icon.setImageURI(Uri.parse(MyObjects.user.imageuri))
                 holder.rightMsg.text = msg.content
             }
             else -> throw IllegalArgumentException()

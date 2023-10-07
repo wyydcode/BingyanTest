@@ -10,14 +10,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text = "新朋友"
-            android:textSize="30dp"
+            android:textSize="20dp"
             android:gravity="center_horizontal"
-            android:background="@color/unchecked"
-            android:textColor="@color/white"/>
+            android:background="@color/white"
+            />
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#e0e0e0" />
+            android:background="#000000" />
         <androidx.recyclerview.widget.RecyclerView
             android:id = "@+id/new_friend_list_recyclerview"
             android:orientation="vertical"

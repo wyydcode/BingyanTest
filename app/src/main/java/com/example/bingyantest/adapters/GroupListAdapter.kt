@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bingyantest.R
 import com.example.bingyantest.objects.Friend
@@ -25,13 +26,23 @@ class GroupListAdapter(val groupList: ArrayList<Group>,val friend: Friend) : Rec
             if(currentTime - lastClickTime>= 1000000){
                 val position = viewHolder.adapterPosition
                 val group = groupList[position]
+
                 MyObjects.groupList[position].member.add(friend)// 添加成员
                 val db = MyObjects.dbHelper.writableDatabase//更新数据库
                 val values = ContentValues().apply {
                     put("groups",group.name)
                 }
+                val cursor = db.query("Friends", arrayOf("groups"),"account = ?", arrayOf("${friend.account}"),null,null,null)
+                cursor.moveToFirst()
+                val friendGroup =  cursor.getString(cursor.getColumnIndexOrThrow("groups"))
                 db.update("Friends",values,"account = ?", arrayOf("${friend.account}"))
+                MyObjects.groupList.forEach{
+                    if(it.name==friendGroup){
+                        it.member.remove(friend)
+                    }
+                }
                 lastClickTime = currentTime
+                Toast.makeText(parent.context,"设置分组成功",Toast.LENGTH_SHORT).show()
             }
         }
         return viewHolder

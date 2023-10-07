@@ -31,6 +31,14 @@ class GroupSet:BaseActivity() {
                 val values = ContentValues().apply {
                     put("groups",text)
                 }
+                val cursor = db.query("Friends", arrayOf("groups"),"account = ?", arrayOf("${friend.account}"),null,null,null)
+                cursor.moveToFirst()
+                val friendGroup =  cursor.getString(cursor.getColumnIndexOrThrow("groups"))
+                MyObjects.groupList.forEach{
+                    if(it.name==friendGroup){
+                        it.member.remove(friend)
+                    }
+                }
                 db.update("Friends",values,"account = ?", arrayOf("${friend.account}"))//存入数据库
                 Toast.makeText(this,"成功建立分组",Toast.LENGTH_SHORT).show()
             }else{

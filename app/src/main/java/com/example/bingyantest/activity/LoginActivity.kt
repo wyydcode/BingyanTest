@@ -21,6 +21,7 @@ class LoginActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        supportActionBar?.hide()
         val prefs = getPreferences(Context.MODE_PRIVATE)
         val isRemember = prefs.getBoolean("remember_password", false)
         val accountEdit = findViewById<EditText>(R.id.accountEdit)
