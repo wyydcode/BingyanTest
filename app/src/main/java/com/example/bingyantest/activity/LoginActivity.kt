@@ -83,7 +83,7 @@ class LoginActivity : BaseActivity() {
                 finish()
             } else {
                 Toast.makeText(
-                    this, "account or password is invalid",
+                    this, "账号或密码错误",
                     Toast.LENGTH_SHORT
                 ).show()
             }

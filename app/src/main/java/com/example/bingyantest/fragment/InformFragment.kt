@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bingyantest.R
+import com.example.bingyantest.adapters.InformationAdapter
 import com.example.bingyantest.adapters.NewFriendAdapter
 import com.example.bingyantest.objects.MyObjects
 
@@ -18,11 +19,11 @@ class InformFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view: View = inflater.inflate(R.layout.new_friend_list_fragment, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_information, container, false)
 
-        val recyclerView = view.findViewById<RecyclerView>(R.id.new_friend_list_recyclerview)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.information_recyclerview)
         recyclerView.layoutManager = LinearLayoutManager(activity)
-        recyclerView.adapter = NewFriendAdapter(informList)
+        recyclerView.adapter = InformationAdapter(informList)
         return view
     }
 }

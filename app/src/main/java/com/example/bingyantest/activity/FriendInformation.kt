@@ -77,6 +77,13 @@ class FriendInformation :BaseActivity(){
                         db.insertWithOnConflict("DeleteInformation",null,values, SQLiteDatabase.CONFLICT_IGNORE)
 
                         MyObjects.friendslist.value?.remove(MyObjects.query(account.toString()))
+                        for( item in MyObjects.groupList){
+                            item.member.forEach{
+                                if(it.account==account.text.toString()){
+                                    item.member.remove(it)
+                                }
+                            }
+                        }
 
                         Toast.makeText(context,"删除成功",Toast.LENGTH_SHORT).show()
                     }

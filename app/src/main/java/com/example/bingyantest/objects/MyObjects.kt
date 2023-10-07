@@ -55,6 +55,14 @@ object MyObjects  {
         }
         return Friend("error","error","error","error")
     }
+    fun queryInformation(account: String):Friend{
+        usersList.forEach{
+            if(account == it.account){
+                return Friend(it.name,it.account,it.imageuri,it.email)
+            }
+        }
+        return Friend("error","error","error","error")
+    }
     fun add(friend:Friend){
         if(friendslist.value?.contains(friend) == true){
             return
@@ -104,6 +112,7 @@ object MyObjects  {
 
         // Friends
         val cursor1 = db.query("Friends", null, "user = ?", arrayOf("$userAccount"), null, null, null)
+        groupList.add(Group("联系人",ArrayList<Friend>()))
         if (cursor1.moveToFirst()) {
             do {
                 // 遍历Cursor对象，取出数据并打印
@@ -161,9 +170,10 @@ object MyObjects  {
             do{
                 val sender = cursor4.getString(cursor4.getColumnIndexOrThrow("sender"))
                 remove(sender)
-                informList.add(query(sender))
+                informList.add(queryInformation(sender))
             }while (cursor4.moveToNext())
         }
+        val cursor5 = db.delete("DeleteInformation", "receiver = ?", arrayOf("$userAccount"))
     }
     fun initialize(context: Context){
         appContext = context.applicationContext

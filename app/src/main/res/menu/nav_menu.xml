@@ -10,7 +10,7 @@
             android:icon="@drawable/nav_friends"
             android:title="Friends" />
         <item
-            android:id="@+id/navLocation"
+            android:id="@+id/navAccount"
             android:icon="@drawable/account"
             android:title="account" />
         <item

@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="180dp"
     android:padding="10dp"
-    android:background="@color/colorPrimary">
+    android:background="@color/unchecked">
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/iconImage"
+        android:id="@+id/nav_iconImage"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:src="@drawable/nav_icon"

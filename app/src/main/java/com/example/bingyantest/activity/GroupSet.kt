@@ -21,7 +21,7 @@ class GroupSet:BaseActivity() {
         setContentView(R.layout.group_set)
         val button = findViewById<Button>(R.id.new_group)
         val editText = findViewById<EditText>(R.id.new_group_name)
-        val friend = Friend(intent.getStringExtra("name")!!,intent.getStringExtra("account")!!,intent.getStringExtra("email")!!,intent.getStringExtra("imageuri")!!)
+        val friend = Friend(intent.getStringExtra("name")!!,intent.getStringExtra("account")!!,intent.getStringExtra("imageuri")!!,intent.getStringExtra("email")!!)
         button.setOnClickListener {
             val text = editText.text.toString()
             if(text!=null&&text!=""){
