@@ -158,7 +158,9 @@ object MyObjects  {
                 val friendaccount = cursor3.getString(cursor3.getColumnIndexOrThrow("receiver")).toString()
                 usersList.forEach{
                     if(friendaccount==it.account){
-                        add(Friend(it.name,it.account,it.imageuri,it.email))
+                        val friend = Friend(it.name,it.account,it.imageuri,it.email)
+                        add(friend)
+                        groupList[0].member.add(friend)
                         return@forEach
                     }
                 }
