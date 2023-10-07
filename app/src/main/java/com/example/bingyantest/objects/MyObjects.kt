@@ -116,12 +116,12 @@ object MyObjects  {
         if (cursor1.moveToFirst()) {
             do {
                 // 遍历Cursor对象，取出数据并打印
-                val name = cursor1.getString(cursor1.getColumnIndexOrThrow("name"))
+                //val name = cursor1.getString(cursor1.getColumnIndexOrThrow("name"))
                 val account = cursor1.getString(cursor1.getColumnIndexOrThrow("account"))
-                val email = cursor1.getString(cursor1.getColumnIndexOrThrow("email"))
-                val imageuri = cursor1.getString(cursor1.getColumnIndexOrThrow("imageuri"))
+                //val email = cursor1.getString(cursor1.getColumnIndexOrThrow("email"))
+                //val imageuri = cursor1.getString(cursor1.getColumnIndexOrThrow("imageuri"))
                 val group = cursor1.getString(cursor1.getColumnIndexOrThrow("groups"))
-                val friend = Friend(name,account,imageuri,email)
+                val friend = queryInformation(account)
                 var find = false
                 groupList.forEach{
                     if(it.name==group){
